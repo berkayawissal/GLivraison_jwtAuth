@@ -13,11 +13,7 @@ public class Role {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
-	@Enumerated(EnumType.STRING)
-    private ERole name;
-
-	public Role(ERole eRole) {
-	}
+    private String name;
 
 	/* @ManyToMany(fetch = FetchType.EAGER)
      private Set<User> users=new HashSet<>();*/
@@ -27,11 +23,11 @@ public class Role {
 	public void setId(Long id) {
 		this.id = id;
 	}
-	public ERole getName() {
+	public String getName() {
 		return name;
 	}
 	public void setName(String name) {
-		this.name = ERole.valueOf(name);
+		this.name =name;
 	}
     
 
