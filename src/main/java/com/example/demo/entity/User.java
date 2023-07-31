@@ -30,7 +30,7 @@ public class User  implements UserDetails  {
     private String localisation;
     private String numTel;
 
-    @ManyToMany(fetch = FetchType.EAGER)
+    @ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL )
     private Set<Role> roles = new HashSet<>();
 
 
@@ -49,7 +49,7 @@ public class User  implements UserDetails  {
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
         return this.roles.stream()
-                .map(role -> new SimpleGrantedAuthority(role.getName().toString()))
+                .map(role -> new SimpleGrantedAuthority(role.getName()))
                 .collect(Collectors.toList());
     }
 

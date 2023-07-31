@@ -42,7 +42,7 @@ public class SecurityConfiguration {
                 "/webjars/**",
                 "/swagger-ui.html",
                 "/**/h2-console/**").permitAll()
-         
+      .antMatchers("**/auth/user/save/**").hasAuthority("ADMIN")
         .anyRequest()
           .authenticated()
         .and()

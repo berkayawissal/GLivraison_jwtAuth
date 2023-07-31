@@ -10,7 +10,11 @@ import com.example.demo.service.UsersService;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
 
@@ -19,26 +23,27 @@ import java.util.Optional;
 @RequiredArgsConstructor
 public class UsersController {
     private final UsersService service;
-    private final AuthenticationService serviceAuth;
-
-    @PostMapping("/register")
-    public ResponseEntity<AuthenticationResponse> register(
-            @RequestBody RegistrationRequest request
-    ) {
-        return ResponseEntity.ok(serviceAuth.register(request));
-    }
-
-    @PostMapping("/authenticate")
-    public ResponseEntity<AuthenticationResponse> register(
-            @RequestBody AuthenticationRequest request
-    ) {
-        return ResponseEntity.ok(serviceAuth.authenticate(request));
-    }
-///api/auth/user/allUsers
+    private final PasswordEncoder passwordEncoder;
+    @PreAuthorize("hasAuthority('ADMIN')")
      @PostMapping("/save")
-    public User saveUser(@RequestBody User user) {
+    public ResponseEntity saveUser(@RequestBody User userRequest) {
+        String encodedPassword = passwordEncoder.encode(userRequest.getPassword());
 
-        return service.saveUser(user);
+        // Create a new User entity
+        User user = new User();
+        user.setFullname(userRequest.getUsername());
+        user.setEmail(userRequest.getEmail());
+        user.setAddress(userRequest.getAddress());
+        user.setLocalisation(userRequest.getLocalisation());
+        user.setPassword(encodedPassword);
+        user.setNumTel(userRequest.getNumTel());
+        user.setRoles(userRequest.getRoles());
+        //user.setAuthorities(Collections.singleton(Authorities.USER)); // Assuming regular users have "USER" authority
+
+        // Save the user
+        service.saveUser(user);
+
+        return ResponseEntity.ok("User registered successfully.");
     }
     @GetMapping("/allUsers")
     public List<User> findAllUsers(){
