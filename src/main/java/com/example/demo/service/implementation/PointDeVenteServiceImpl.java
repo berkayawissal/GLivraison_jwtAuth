@@ -3,11 +3,14 @@ package com.example.demo.service.implementation;
 import com.example.demo.entity.PointDeVente;
 import com.example.demo.repository.PointDeVenteRepository;
 import com.example.demo.service.PointDeVenteService;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
+import java.util.Optional;
 
 @Component
+@Slf4j
 public class PointDeVenteServiceImpl implements PointDeVenteService {
 
     private PointDeVenteRepository repository;
@@ -25,4 +28,19 @@ public class PointDeVenteServiceImpl implements PointDeVenteService {
     public Object savePointDeVente(PointDeVente pointDeVente) {
         return repository.save(pointDeVente);
     }
+    @Override
+    public void delete(Integer id) {
+        if (id==null) {
+            log.error("l'ID est null");
+            return;
+        }
+        repository.deleteById(id);
+    }
+
+    @Override
+    public PointDeVente findById(Integer id) {
+        Optional<PointDeVente> optional =repository.findById(id);
+        return optional.orElse(null);
+    }
+
 }

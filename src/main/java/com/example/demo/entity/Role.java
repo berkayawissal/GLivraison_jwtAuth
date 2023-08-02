@@ -1,6 +1,7 @@
 package com.example.demo.entity;
 
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import lombok.AllArgsConstructor;
 import lombok.NoArgsConstructor;
 
@@ -15,9 +16,12 @@ public class Role {
     private Long id;
     private String name;
 
+    public Role(String name) {
+		this.name=name;
+    }
 
 
-	/* @ManyToMany(fetch = FetchType.EAGER)
+    /* @ManyToMany(fetch = FetchType.EAGER)
      private Set<User> users=new HashSet<>();*/
 	public Long getId() {
 		return id;
@@ -31,6 +35,6 @@ public class Role {
 	public void setName(String name) {
 		this.name =name;
 	}
-    
+
 
 }

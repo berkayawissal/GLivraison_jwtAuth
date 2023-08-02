@@ -10,4 +10,7 @@ public interface EndUsersService {
     List<EndUsers> findAllEndUsers();
 
     Object saveEndUser(EndUsers endUsers);
+    void delete(Integer id);
+
+    EndUsers findById(Integer id);
 }

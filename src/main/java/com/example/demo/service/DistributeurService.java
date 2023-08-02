@@ -8,5 +8,8 @@ import java.util.List;
 public interface DistributeurService {
     List<Distributeur> findAllDistributeurs();
 
-    Object saveDistributeur(Distributeur distributeurEntity);
+    Distributeur saveDistributeur(Distributeur distributeurEntity);
+    void delete(Integer id);
+
+    Distributeur findById(Integer id);
 }

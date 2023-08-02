@@ -20,7 +20,6 @@ import java.util.*;
 public class Commande {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @JsonBackReference
     private Integer idCommande;
 
     private double total;

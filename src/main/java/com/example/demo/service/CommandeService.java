@@ -19,4 +19,6 @@ public interface CommandeService {
     Optional<Commande> findCommandeByEtat(EtatCommande etat);
 
     List<Integer> getDeliveredCommand(EtatCommande etat, LocalDate startDate, LocalDate endDate);
+    void delete(Integer id);
+
 }

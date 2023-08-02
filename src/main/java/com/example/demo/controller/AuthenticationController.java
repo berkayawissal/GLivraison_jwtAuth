@@ -16,7 +16,8 @@ import java.util.List;
 
 
 @RestController
-@RequestMapping("/api/v1/auth")
+@RequestMapping("/api/auth")
+@CrossOrigin(origins = "http://localhost:4200", maxAge = 3600, allowCredentials="true")
 @RequiredArgsConstructor
 public class AuthenticationController {
 
@@ -42,18 +43,5 @@ public class AuthenticationController {
         return userRepository.findAll();
     }
     private final AuthenticationService serviceAuth;
-//
-//    @PostMapping("/register")
-//    public ResponseEntity<AuthenticationResponse> register(
-//            @RequestBody RegistrationRequest request
-//    ) {
-//        return ResponseEntity.ok(serviceAuth.register(request));
-//    }
-//
-//    @PostMapping("/authenticate")
-//    public ResponseEntity<AuthenticationResponse> register(
-//            @RequestBody AuthenticationRequest request
-//    ) {
-//        return ResponseEntity.ok(serviceAuth.authenticate(request));
-//    }
+
 }

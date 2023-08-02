@@ -3,10 +3,13 @@ package com.example.demo.service.implementation;
 import com.example.demo.entity.Produit;
 import com.example.demo.repository.ProduitRepository;
 import com.example.demo.service.ProduitService;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
+import java.util.Optional;
 
+@Slf4j
 @Component
 public class ProduitServiceImpl implements ProduitService {
     private ProduitRepository repository;
@@ -24,4 +27,20 @@ public class ProduitServiceImpl implements ProduitService {
     public Object saveProduit(Produit produit) {
         return repository.save(produit);
     }
+
+    @Override
+    public void delete(Integer id) {
+        if (id==null) {
+            log.error("l'ID est null");
+            return;
+        }
+        repository.deleteById(id);
+    }
+
+    @Override
+    public Produit findById(Integer id) {
+        Optional<Produit> optional =repository.findById(id);
+        return optional.orElse(null);
+    }
+
 }

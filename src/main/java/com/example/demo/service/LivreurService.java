@@ -11,4 +11,7 @@ public interface LivreurService {
     List<Livreur> findAllLivreurs();
 
     Object saveLivreur(Livreur livreur);
+    void delete(Integer id);
+
+    Livreur findById(Integer id);
 }

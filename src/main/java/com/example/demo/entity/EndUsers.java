@@ -19,10 +19,10 @@ public EndUsers(){
     @JoinColumn(name = "point_de_vente_id")
     @JsonBackReference
     private PointDeVente pointDeVente;
-    @OneToMany(mappedBy = "endUser",cascade=CascadeType.PERSIST)
+    @OneToMany(mappedBy = "endUser",cascade=CascadeType.PERSIST, fetch = FetchType.LAZY)
     @JsonManagedReference
     private List<Commande> commandes;
-    @OneToMany(mappedBy = "endUsers", cascade = CascadeType.PERSIST)
+    @OneToMany(mappedBy = "endUsers", cascade = CascadeType.PERSIST, fetch = FetchType.LAZY)
     @JsonManagedReference
     private List<Livreur> Livreurs;
 

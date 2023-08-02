@@ -10,4 +10,8 @@ public interface ProduitService {
     List<Produit> findAllProduits();
 
     Object saveProduit(Produit produit);
+
+    void delete(Integer id);
+
+    Produit findById(Integer id);
 }

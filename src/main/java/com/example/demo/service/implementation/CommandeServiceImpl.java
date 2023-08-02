@@ -1,9 +1,11 @@
 package com.example.demo.service.implementation;
 
+import com.example.demo.entity.Admin;
 import com.example.demo.entity.Commande;
 import com.example.demo.entity.EtatCommande;
 import com.example.demo.repository.CommandeRepository;
 import com.example.demo.service.CommandeService;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
 
 import java.time.LocalDate;
@@ -12,6 +14,7 @@ import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Component
+@Slf4j
 public class CommandeServiceImpl implements CommandeService {
     private CommandeRepository repository;
 
@@ -39,9 +42,9 @@ public class CommandeServiceImpl implements CommandeService {
     }
     @Override
     public Optional<Commande> findCommandeByEtat(EtatCommande etat) {
-        Optional<Commande> commnades = repository.findByEtat(EtatCommande.LIVREE);
-        if (commnades.isPresent()){
-            return Optional.ofNullable(commnades.orElseThrow(() -> new RuntimeException("no delivered command found")));
+        Optional<Commande> commandes = repository.findByEtat(EtatCommande.LIVREE);
+        if (commandes.isPresent()){
+            return Optional.ofNullable(commandes.orElseThrow(() -> new RuntimeException("no delivered command found")));
     } else {
             return Optional.empty();
         }
@@ -57,6 +60,14 @@ public class CommandeServiceImpl implements CommandeService {
                 .collect(Collectors.toList());
     }
 
+    @Override
+    public void delete(Integer id) {
+        if (id==null) {
+            log.error("l'ID est null");
+            return;
+        }
+        repository.deleteById(id);
+    }
 
 
 }

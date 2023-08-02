@@ -10,4 +10,7 @@ public interface PhysiqueService {
     List<Physique> findAllPhysiques();
 
     Object savePhysique(Physique physique);
+    void delete(Integer id);
+
+    Physique findById(Integer id);
 }

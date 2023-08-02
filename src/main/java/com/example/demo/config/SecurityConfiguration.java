@@ -27,10 +27,11 @@ public class SecurityConfiguration {
     http
         .csrf()
         .disable();
-       
+        http.authorizeRequests().antMatchers( "/**/api/test/**","**/auth/user/save/**").hasAuthority("ADMIN");
         http.authorizeRequests().antMatchers("/**/auth/**",
+
         		"/**/role/**",
-        		
+
                 // swagger
                 "/v3/api-docs",
                 "/v3/api-docs/**",
@@ -42,7 +43,7 @@ public class SecurityConfiguration {
                 "/webjars/**",
                 "/swagger-ui.html",
                 "/**/h2-console/**").permitAll()
-      .antMatchers("**/auth/user/save/**").hasAuthority("ADMIN")
+
         .anyRequest()
           .authenticated()
         .and()
@@ -50,7 +51,7 @@ public class SecurityConfiguration {
           .sessionCreationPolicy(SessionCreationPolicy.STATELESS)
         .and()
         .authenticationProvider(authenticationProvider)
-        .addFilterBefore(jwtAuthFilter, UsernamePasswordAuthenticationFilter.class)
+       // .addFilterBefore(jwtAuthFilter, UsernamePasswordAuthenticationFilter.class)
         .logout()
         .logoutUrl("/api/v1/auth/logout")
         .addLogoutHandler(logoutHandler)

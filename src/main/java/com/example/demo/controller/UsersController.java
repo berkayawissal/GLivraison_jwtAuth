@@ -24,26 +24,27 @@ import java.util.Optional;
 public class UsersController {
     private final UsersService service;
     private final PasswordEncoder passwordEncoder;
-    @PreAuthorize("hasAuthority('ADMIN')")
-     @PostMapping("/save")
+    @PreAuthorize("hasRole('ADMIN')")
+    @PostMapping("/save")
     public ResponseEntity saveUser(@RequestBody User userRequest) {
         String encodedPassword = passwordEncoder.encode(userRequest.getPassword());
 
         // Create a new User entity
         User user = new User();
-        user.setFullname(userRequest.getUsername());
+        user.setFullname(userRequest.getFullname());
         user.setEmail(userRequest.getEmail());
         user.setAddress(userRequest.getAddress());
         user.setLocalisation(userRequest.getLocalisation());
         user.setPassword(encodedPassword);
         user.setNumTel(userRequest.getNumTel());
         user.setRoles(userRequest.getRoles());
-        //user.setAuthorities(Collections.singleton(Authorities.USER)); // Assuming regular users have "USER" authority
+
+       // user.setAuthorities(Collections.singleton(Authorities.USER)); // Assuming regular users have "USER" authority
 
         // Save the user
         service.saveUser(user);
 
-        return ResponseEntity.ok("User registered successfully.");
+        return ResponseEntity.ok(userRequest.getAuthorities());
     }
     @GetMapping("/allUsers")
     public List<User> findAllUsers(){

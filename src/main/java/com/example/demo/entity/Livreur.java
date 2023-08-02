@@ -13,7 +13,7 @@ public class Livreur extends User{
     public Livreur(){
 
     }
-    @OneToMany(mappedBy = "livreurs", cascade = CascadeType.PERSIST)
+    @OneToMany(mappedBy = "livreurs", cascade = CascadeType.PERSIST,fetch = FetchType.LAZY)
     @JsonManagedReference
     private List<Commande> commandes;
     @ManyToOne( cascade=CascadeType.PERSIST)

@@ -1,5 +1,6 @@
 package com.example.demo.entity;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import lombok.*;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
@@ -29,11 +30,12 @@ public class User  implements UserDetails  {
     private String address;
     private String localisation;
     private String numTel;
+    @OneToMany(mappedBy = "user",fetch = FetchType.EAGER)
+    @JsonManagedReference
+    private List<Token> tokens;
 
-    @ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL )
+    @ManyToMany(fetch = FetchType.EAGER, cascade = {CascadeType.MERGE})
     private Set<Role> roles = new HashSet<>();
-
-
     public User(Integer id, String fullname, String password, String email, String address, String localisation, String numTel, Set<Role> roles) {
 
         this.id = id;
@@ -43,6 +45,18 @@ public class User  implements UserDetails  {
         this.address = address;
         this.localisation = localisation;
         this.numTel = numTel;
+        this.roles = roles;
+    }
+
+    public User(Integer id, String fullname, String password, String email, String address, String localisation, String numTel, List<Token> tokens, Set<Role> roles) {
+        this.id = id;
+        this.fullname = fullname;
+        this.password = password;
+        this.email = email;
+        this.address = address;
+        this.localisation = localisation;
+        this.numTel = numTel;
+        this.tokens = tokens;
         this.roles = roles;
     }
 
