@@ -2,6 +2,9 @@ package com.example.demo.entity;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
+import lombok.Data;
+import org.hibernate.annotations.Fetch;
+import org.hibernate.annotations.FetchMode;
 
 import javax.persistence.*;
 import java.util.List;
@@ -9,18 +12,34 @@ import java.util.Set;
 
 @Inheritance(strategy=InheritanceType.TABLE_PER_CLASS)
 @Entity
+@Data
 @Table (name ="PointDeVente")
-public class PointDeVente extends User {
+public class PointDeVente {
+    @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    private Integer idPointDeVente;
+    private String fullname;
+    private String password;
+    private String email;
+    private String address;
+    private String localisation;
+    private String numTel;
 
 
     public PointDeVente() {
     }
-    @OneToMany(mappedBy = "pointDeVente", cascade=CascadeType.PERSIST, fetch = FetchType.LAZY)
+    @ManyToOne( fetch = FetchType.LAZY)
+    @JoinColumn(name = "idUser")
+    @JsonBackReference
+    private User user;
+    @OneToMany(mappedBy = "pointDeVente",fetch = FetchType.EAGER)
     @JsonManagedReference
+    @Fetch(value = FetchMode.SUBSELECT)
     private List<EndUsers> endUsers;
 
-    @OneToMany(mappedBy = "pointDeVente",cascade=CascadeType.PERSIST, fetch = FetchType.LAZY)
+    @OneToMany(mappedBy = "pointDeVente",fetch = FetchType.EAGER)
     @JsonManagedReference
+    @Fetch(value = FetchMode.SUBSELECT)
     private List<Produit> produits;
 
     public List<EndUsers> getEndUsers() {
@@ -39,9 +58,7 @@ public class PointDeVente extends User {
         this.produits = produits;
     }
 
-    public PointDeVente(Integer id, String fullname, String password, String email, String address, String localisation, String numTel, Set<Role> roles) {
-        super(id, fullname, password, email, address, localisation, numTel, roles);
-    }
+
 
     @Override
     public String toString() {

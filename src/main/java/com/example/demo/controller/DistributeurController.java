@@ -4,6 +4,8 @@ import com.example.demo.entity.Distributeur;
 import com.example.demo.entity.User;
 import com.example.demo.service.DistributeurService;
 import javax.validation.Valid;
+
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
@@ -17,6 +19,7 @@ public class DistributeurController {
     }
 
     @PostMapping("/save")
+    @PreAuthorize("hasRole('ADMIN')")
     public Distributeur saveDistributeur(@Valid @RequestBody Distributeur distributeur) {
         System.out.println("saved");
         return service.saveDistributeur(distributeur);
@@ -30,6 +33,7 @@ public class DistributeurController {
         return service.findById(id);
     }
     @DeleteMapping("/delete/{id}")
+    @PreAuthorize("hasRole('ADMIN')")
     void delete(@PathVariable("id") Integer id) {
         service.delete(id);
     }

@@ -62,14 +62,6 @@ public class UsersServiceImpl implements UsersService {
             return null;
         }
     }
-    @Override
-    public User getUserByFullname(String name) {
-        User user = repository.getUserByFullname(name);
-        if(user == null){
-            throw new AdminNotFoundException("Invalid id and password");
-        }
-        return user;
-    }
 
     @Override
     public void delete(Integer id) {

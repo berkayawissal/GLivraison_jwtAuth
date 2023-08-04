@@ -27,12 +27,14 @@ import java.util.Set;
 public class AuthenticationService {
   private final RoleRepository roleRepository;
   private final UserRepository repository;
-  private final AdminRepository adminRepository;
+  private final DistributeurRepository distributeurRepository;
   private final TokenRepository tokenRepository;
+  private final PointDeVenteRepository venteRepository;
   private final PasswordEncoder passwordEncoder;
   private final JwtService jwtService;
   private final AuthenticationManager authenticationManager;
   private final LivreurRepository livreurRepository;
+  private final AdminRepository adminRepository;
 
   public AuthenticationResponse register(RegistrationRequest request) {
 	 //
@@ -40,9 +42,8 @@ public class AuthenticationService {
       //System.err.println(strRoles[]);
     Set<Role> roles = new HashSet<>();
     //todo if role = "ADMIN" => adminRepository.save(request) :: dans le table admin
-    //todo if role = "Livreur" => livreurRepository.save(request) :: dans le table livreur
       if (strRoles == null) {
-          Role userRole = roleRepository.findByName("USER")
+          Role userRole = roleRepository.findByName("ADMIN")
                   .orElseThrow(() -> new RuntimeException("Error: Role is not found."));
         roles.add(userRole);
       } else {
@@ -55,22 +56,50 @@ public class AuthenticationService {
           });
       }
     var  user = User.builder()
-            .fullname(request.getFullname())
-            .numTel(request.getNumTel())
-            .localisation(request.getLocalisation())
-            .address(request.getAddress())
             .email(request.getEmail())
             .password(passwordEncoder.encode(request.getPassword()))
+            .fullname(request.getFullname())
             .build();
     user.setRoles(roles);
+
+    if (strRoles.contains("LIVREUR")) {
+      Livreur livreur = new Livreur();
+      livreur.setEmail(request.getEmail());
+      livreur.setPassword(passwordEncoder.encode(request.getPassword()));
+      livreur.setFullname(request.getFullname());
+     // user = livreur.getIdAdmin();
+      livreurRepository.save(livreur);
+    } else if (strRoles.contains("DISTRIBUTEUR"))  {
+          Distributeur distributeur = new Distributeur();
+          distributeur.setEmail(request.getEmail());
+          distributeur.setPassword(passwordEncoder.encode(request.getPassword()));
+          distributeur.setFullname(request.getFullname());
+         // user = distributeur.getIdAdmin();
+      distributeurRepository.save(distributeur);
+    }else if (strRoles.contains("POINT_DE_VENTE")){
+      PointDeVente pointDeVente = new PointDeVente();
+      pointDeVente.setEmail(request.getEmail());
+      pointDeVente.setPassword(passwordEncoder.encode(request.getPassword()));
+      pointDeVente.setFullname(request.getFullname());
+      //user = pointDeVente.getIdAdmin();
+      venteRepository.save(pointDeVente);
+    }else if (strRoles.contains("ADMIN")){
+      Admin admin = new Admin();
+      admin.setPassword(passwordEncoder.encode(request.getPassword()));
+      admin.setEmail(request.getEmail());
+      admin.setFullname(request.getFullname());
+      adminRepository.save(admin);
+    } else {
+      throw new IllegalArgumentException("Invalid role: " + strRoles);
+    }
     var savedUser = repository.save(user);
     var jwtToken = jwtService.generateToken(user);
     var refreshToken = jwtService.generateRefreshToken(user);
     saveUserToken(savedUser, jwtToken);
     return AuthenticationResponse.builder()
-        .accessToken(jwtToken)
+            .accessToken(jwtToken)
             .refreshToken(refreshToken)
-        .build();
+            .build();
   }
 
   public AuthenticationResponse authenticate(AuthenticationRequest request) {
@@ -142,44 +171,4 @@ public class AuthenticationService {
     }
   }
 }
-/*if (strRoles != null) {
-    var  user = User.builder()
-            .fullname(request.getFullname())
-            .numTel(request.getNumTel())
-            .localisation(request.getLocalisation())
-            .address(request.getAddress())
-            .email(request.getEmail())
-            .password(passwordEncoder.encode(request.getPassword()))
-            .build();
-    user.setRoles(strRoles);
-    switch (strRoles) {
-      case "ADMIN":
-        var adminSaved = adminRepository.saveAdmin((Admin) user);
-        var jwtTokenAdmin = jwtService.generateToken(user);
-        var refreshTokenAdmin = jwtService.generateRefreshToken(user);
-        saveUserToken(adminSaved, jwtTokenAdmin);
-        return AuthenticationResponse.builder()
-                .accessToken(jwtTokenAdmin)
-                .refreshToken(refreshTokenAdmin)
-                .build();
-      case "LIVREUR":
-        var livreurSaved = livreurRepository.saveLivreur((Livreur) user);
-        var jwtTokenLivreur = jwtService.generateToken(user);
-        var refreshTokenLivreur = jwtService.generateRefreshToken(user);
-        saveUserToken(livreurSaved, jwtTokenLivreur);
-        return AuthenticationResponse.builder()
-                .accessToken(jwtTokenLivreur)
-                .refreshToken(refreshTokenLivreur)
-                .build();
-      default:
-        var savedUser = repository.save(user);
-        var jwtToken = jwtService.generateToken(user);
-        var refreshToken = jwtService.generateRefreshToken(user);
-        saveUserToken(savedUser, jwtToken);
-        return AuthenticationResponse.builder()
-                .accessToken(jwtToken)
-                .refreshToken(refreshToken)
-                .build();
-    }
-  }*/
  

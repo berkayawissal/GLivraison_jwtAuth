@@ -31,12 +31,8 @@ public class UsersController {
 
         // Create a new User entity
         User user = new User();
-        user.setFullname(userRequest.getFullname());
         user.setEmail(userRequest.getEmail());
-        user.setAddress(userRequest.getAddress());
-        user.setLocalisation(userRequest.getLocalisation());
         user.setPassword(encodedPassword);
-        user.setNumTel(userRequest.getNumTel());
         user.setRoles(userRequest.getRoles());
 
        // user.setAuthorities(Collections.singleton(Authorities.USER)); // Assuming regular users have "USER" authority

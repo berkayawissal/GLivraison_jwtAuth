@@ -10,7 +10,7 @@ import java.util.List;
 public interface PointDeVenteService {
     List<PointDeVente> findAllPointDeVentes();
 
-    Object savePointDeVente(PointDeVente pointDeVente);
+    PointDeVente savePointDeVente(PointDeVente pointDeVente);
     void delete(Integer id);
 
     PointDeVente findById(Integer id);

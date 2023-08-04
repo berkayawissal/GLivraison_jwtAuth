@@ -5,12 +5,14 @@ import com.example.demo.repository.EndUsersRepository;
 import com.example.demo.service.EndUsersService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.Optional;
 
 @Component
 @Slf4j
+@Transactional
 public class EndUsersServiceImpl implements EndUsersService {
 
     private EndUsersRepository repository;
@@ -25,7 +27,7 @@ public class EndUsersServiceImpl implements EndUsersService {
     }
 
     @Override
-    public Object saveEndUser(EndUsers endUsers) {
+    public EndUsers saveEndUser(EndUsers endUsers) {
         return repository.save(endUsers);
     }
     @Override

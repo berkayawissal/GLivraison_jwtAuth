@@ -5,12 +5,14 @@ import com.example.demo.repository.PhysiqueRepository;
 import com.example.demo.service.PhysiqueService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.Optional;
 
 @Component
 @Slf4j
+@Transactional
 public class PhysiqueServiceImpl implements PhysiqueService {
     private PhysiqueRepository repository;
 
@@ -24,7 +26,7 @@ public class PhysiqueServiceImpl implements PhysiqueService {
     }
 
     @Override
-    public Object savePhysique(Physique physique) {
+    public Physique savePhysique(Physique physique) {
         return  repository.save(physique);
     }
     @Override

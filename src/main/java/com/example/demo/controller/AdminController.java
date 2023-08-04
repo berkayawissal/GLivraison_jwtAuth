@@ -27,6 +27,7 @@ public class AdminController {
         return service.findAllAdmins();
     }
     @DeleteMapping("/delete/{id}")
+    @PreAuthorize("hasRole('ADMIN')")
     void delete(@PathVariable("id") Integer id) {
         service.delete(id);
     }
@@ -37,7 +38,8 @@ public class AdminController {
 //        return service.updateAdminbyId(id, admin);
 //    }
     @GetMapping("/findById/{id}")
-    public User findById(@PathVariable Integer id) {
+    @PreAuthorize("hasRole('ADMIN')")
+    public Admin findById(@PathVariable Integer id) {
         return service.findById(id);
     }
 }

@@ -4,6 +4,8 @@ import com.example.demo.entity.EndUsers;
 import com.example.demo.entity.User;
 import com.example.demo.service.EndUsersService;
 import javax.validation.Valid;
+
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -18,9 +20,10 @@ public class EndUserController {
         this.service = service;
     }
     @PostMapping("/save")
+    @PreAuthorize("hasRole('ADMIN')")
     public EndUsers saveEndUser(@Valid @RequestBody EndUsers endUsers) {
         System.out.println("saved");
-        return (EndUsers) service.saveEndUser(endUsers);
+        return  service.saveEndUser(endUsers);
     }
     @GetMapping("/findAll")
     public List<EndUsers> findAllEndUsers (){
@@ -31,6 +34,7 @@ public class EndUserController {
         return service.findById(id);
     }
     @DeleteMapping("/delete/{id}")
+    @PreAuthorize("hasRole('ADMIN')")
     void delete(@PathVariable("id") Integer id) {
         service.delete(id);
     }

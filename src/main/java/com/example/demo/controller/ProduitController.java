@@ -4,6 +4,8 @@ import com.example.demo.entity.Produit;
 import com.example.demo.entity.User;
 import com.example.demo.service.ProduitService;
 import javax.validation.Valid;
+
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
@@ -17,9 +19,10 @@ public class ProduitController {
     }
 
     @PostMapping("/save")
-    public Produit saveProduit(@Valid @RequestBody Produit produit) {
+    @PreAuthorize("hasRole('ADMIN')")
+    public Produit saveProduit( @RequestBody Produit produit) {
         System.out.println("saved");
-        return (Produit) service.saveProduit(produit);
+        return  service.saveProduit(produit);
     }
     @GetMapping("/findAll")
     public List<Produit> findAllProduits (){
@@ -30,6 +33,7 @@ public class ProduitController {
         return service.findById(id);
     }
     @DeleteMapping("/delete/{id}")
+    @PreAuthorize("hasRole('ADMIN')")
     void delete(@PathVariable("id") Integer id) {
         service.delete(id);
     }

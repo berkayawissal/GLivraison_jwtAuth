@@ -17,7 +17,6 @@ public interface UsersService {
     User findById(Integer id);
 
     Optional<User> findByEmail(String email);
-    User getUserByFullname(String name);
 
     void delete(Integer id);
 }

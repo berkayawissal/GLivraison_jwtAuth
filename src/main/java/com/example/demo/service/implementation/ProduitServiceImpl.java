@@ -5,11 +5,13 @@ import com.example.demo.repository.ProduitRepository;
 import com.example.demo.service.ProduitService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.Optional;
 
 @Slf4j
+@Transactional
 @Component
 public class ProduitServiceImpl implements ProduitService {
     private ProduitRepository repository;
@@ -24,7 +26,7 @@ public class ProduitServiceImpl implements ProduitService {
     }
 
     @Override
-    public Object saveProduit(Produit produit) {
+    public Produit saveProduit(Produit produit) {
         return repository.save(produit);
     }
 

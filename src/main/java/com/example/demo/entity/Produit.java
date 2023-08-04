@@ -2,11 +2,13 @@ package com.example.demo.entity;
 
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import lombok.AllArgsConstructor;
 
 import javax.persistence.*;
 import java.util.List;
 
 @Entity
+@AllArgsConstructor
 @Table (name = "produits")
 public class Produit {
     public Produit(){
@@ -69,20 +71,13 @@ public class Produit {
         this.distributeurs = distributeurs;
     }
 
-    public Produit(String nom, double prix, PointDeVente pointDeVente, Distributeur distributeurs) {
-        this.nom = nom;
-        this.prix = prix;
-        this.pointDeVente = pointDeVente;
-        this.distributeurs = distributeurs;
-    }
+
 
     @Override
     public String toString() {
         return "Produit{" +
                 "nom='" + nom + '\'' +
                 ", prix=" + prix +
-                ", pointDeVente=" + pointDeVente +
-                ", distributeurs=" + distributeurs +
                 '}';
     }
 }

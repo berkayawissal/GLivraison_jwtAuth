@@ -3,6 +3,8 @@ package com.example.demo.entity;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
+import org.hibernate.annotations.Fetch;
+import org.hibernate.annotations.FetchMode;
 
 import javax.persistence.*;
 import java.util.List;
@@ -10,51 +12,38 @@ import java.util.Set;
 
 @Entity
 @Table(name = "end_users")
-public class EndUsers extends User {
+public class EndUsers  {
 public EndUsers(){
 
 }
+    @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    private Integer idEndUser;
+    private String fullname;
+    private String password;
+    private String email;
+    private String address;
+    private String localisation;
+    private String numTel;
 
     @ManyToOne( cascade=CascadeType.PERSIST)
     @JoinColumn(name = "point_de_vente_id")
     @JsonBackReference
     private PointDeVente pointDeVente;
-    @OneToMany(mappedBy = "endUser",cascade=CascadeType.PERSIST, fetch = FetchType.LAZY)
+    @OneToMany(mappedBy = "endUser",fetch = FetchType.EAGER)
     @JsonManagedReference
+    @Fetch(value = FetchMode.SUBSELECT)
     private List<Commande> commandes;
-    @OneToMany(mappedBy = "endUsers", cascade = CascadeType.PERSIST, fetch = FetchType.LAZY)
+    @OneToMany(mappedBy = "endUsers",fetch = FetchType.EAGER)
     @JsonManagedReference
+    @Fetch(value = FetchMode.SUBSELECT)
     private List<Livreur> Livreurs;
+    @ManyToOne( fetch = FetchType.LAZY)
+    @JoinColumn(name = "idUser")
+    @JsonBackReference
+    private User user;
 
 
-
-    public PointDeVente getPointDeVente() {
-        return pointDeVente;
-    }
-
-    public void setPointDeVente(PointDeVente pointDeVente) {
-        this.pointDeVente = pointDeVente;
-    }
-
-    public List<Commande> getCommandes() {
-        return commandes;
-    }
-
-    public void setCommandes(List<Commande> commandes) {
-        this.commandes = commandes;
-    }
-
-    public List<Livreur> getLivreurs() {
-        return Livreurs;
-    }
-
-    public void setLivreurs(List<Livreur> livreurs) {
-        Livreurs = livreurs;
-    }
-
-    public EndUsers(Integer id, String fullname, String password, String email, String address, String localisation, String numTel, Set<Role> roles) {
-        super(id, fullname, password, email, address, localisation, numTel, roles);
-    }
 
     @Override
     public String toString() {

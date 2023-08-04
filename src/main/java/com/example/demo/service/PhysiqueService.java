@@ -9,7 +9,7 @@ import java.util.List;
 public interface PhysiqueService {
     List<Physique> findAllPhysiques();
 
-    Object savePhysique(Physique physique);
+    Physique savePhysique(Physique physique);
     void delete(Integer id);
 
     Physique findById(Integer id);

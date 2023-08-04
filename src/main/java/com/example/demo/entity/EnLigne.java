@@ -17,9 +17,6 @@ public class EnLigne extends PointDeVente{
                 '}';
     }
 
-    public EnLigne(Integer id, String fullname, String password, String email, String address, String localisation, String numTel, Set<Role> roles) {
-        super(id, fullname, password, email, address, localisation, numTel, roles);
-    }
 
     public EnLigne(String siteWeb) {
         this.siteWeb = siteWeb;

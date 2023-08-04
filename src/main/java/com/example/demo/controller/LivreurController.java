@@ -4,6 +4,8 @@ import com.example.demo.entity.Livreur;
 import com.example.demo.entity.User;
 import com.example.demo.service.LivreurService;
 import javax.validation.Valid;
+
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -18,9 +20,10 @@ public class LivreurController {
         this.service = service;
     }
     @PostMapping("/save")
+    @PreAuthorize("hasRole('ADMIN')")
     public Livreur saveLivreur(@Valid @RequestBody Livreur livreur) {
         System.out.println("saved");
-        return (Livreur) service.saveLivreur(livreur);
+        return service.saveLivreur(livreur);
     }
     @GetMapping("/findAll")
     public List<Livreur> findAllLivreurs (){
@@ -31,6 +34,7 @@ public class LivreurController {
         return service.findById(id);
     }
     @DeleteMapping("/delete/{id}")
+    @PreAuthorize("hasRole('ADMIN')")
     void delete(@PathVariable("id") Integer id) {
         service.delete(id);
     }

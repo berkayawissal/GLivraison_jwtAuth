@@ -8,12 +8,14 @@ import com.example.demo.service.DistributeurService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.Optional;
 
 @Component
 @Slf4j
+@Transactional
 public class DistributeurServiceImpl implements DistributeurService {
     private DistributeurRepository repository;
     public DistributeurServiceImpl(DistributeurRepository repository){

@@ -7,6 +7,7 @@ import com.example.demo.repository.CommandeRepository;
 import com.example.demo.service.CommandeService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDate;
 import java.util.List;
@@ -15,6 +16,7 @@ import java.util.stream.Collectors;
 
 @Component
 @Slf4j
+@Transactional
 public class CommandeServiceImpl implements CommandeService {
     private CommandeRepository repository;
 

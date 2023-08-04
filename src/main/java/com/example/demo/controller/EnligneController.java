@@ -5,6 +5,8 @@ import com.example.demo.entity.EnLigne;
 import com.example.demo.entity.User;
 import com.example.demo.service.EnLigneService;
 import javax.validation.Valid;
+
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 
@@ -21,6 +23,7 @@ public class EnligneController {
         this.service = service;
     }
     @PostMapping("/save")
+    @PreAuthorize("hasRole('ADMIN')")
     public EnLigne saveEnLigne(@Valid @RequestBody EnLigne enLigne) {
         System.out.println("saved");
         return service.saveEnLigne(enLigne);
@@ -34,6 +37,7 @@ public class EnligneController {
         return service.findById(id);
     }
     @DeleteMapping("/delete/{id}")
+    @PreAuthorize("hasRole('ADMIN')")
     void delete(@PathVariable("id") Integer id) {
         service.delete(id);
     }

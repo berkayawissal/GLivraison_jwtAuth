@@ -5,12 +5,14 @@ import com.example.demo.repository.PointDeVenteRepository;
 import com.example.demo.service.PointDeVenteService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.Optional;
 
 @Component
 @Slf4j
+@Transactional
 public class PointDeVenteServiceImpl implements PointDeVenteService {
 
     private PointDeVenteRepository repository;
@@ -25,7 +27,7 @@ public class PointDeVenteServiceImpl implements PointDeVenteService {
     }
 
     @Override
-    public Object savePointDeVente(PointDeVente pointDeVente) {
+    public PointDeVente savePointDeVente(PointDeVente pointDeVente) {
         return repository.save(pointDeVente);
     }
     @Override

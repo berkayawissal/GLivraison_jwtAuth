@@ -5,12 +5,14 @@ import com.example.demo.repository.EnLigneRepository;
 import com.example.demo.service.EnLigneService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.Optional;
 
 @Component
 @Slf4j
+@Transactional
 public class EnLigneServiceImpl implements EnLigneService {
 
     private EnLigneRepository repository;
