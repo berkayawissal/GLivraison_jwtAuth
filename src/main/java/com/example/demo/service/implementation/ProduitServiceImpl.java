@@ -4,6 +4,7 @@ import com.example.demo.entity.Produit;
 import com.example.demo.repository.ProduitRepository;
 import com.example.demo.service.ProduitService;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -14,8 +15,8 @@ import java.util.Optional;
 @Transactional
 @Component
 public class ProduitServiceImpl implements ProduitService {
-    private ProduitRepository repository;
-
+    private final ProduitRepository repository;
+    @Autowired
     public ProduitServiceImpl(ProduitRepository repository) {
         this.repository = repository;
     }

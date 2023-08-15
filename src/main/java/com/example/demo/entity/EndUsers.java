@@ -3,6 +3,7 @@ package com.example.demo.entity;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
+import lombok.Data;
 import org.hibernate.annotations.Fetch;
 import org.hibernate.annotations.FetchMode;
 
@@ -11,6 +12,7 @@ import java.util.List;
 import java.util.Set;
 
 @Entity
+@Data
 @Table(name = "end_users")
 public class EndUsers  {
 public EndUsers(){
@@ -18,7 +20,7 @@ public EndUsers(){
 }
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    private Integer idEndUser;
+    private Integer id;
     private String fullname;
     private String password;
     private String email;
@@ -26,7 +28,7 @@ public EndUsers(){
     private String localisation;
     private String numTel;
 
-    @ManyToOne( cascade=CascadeType.PERSIST)
+    @ManyToOne( fetch = FetchType.LAZY)
     @JoinColumn(name = "point_de_vente_id")
     @JsonBackReference
     private PointDeVente pointDeVente;

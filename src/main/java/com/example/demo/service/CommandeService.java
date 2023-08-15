@@ -21,4 +21,5 @@ public interface CommandeService {
     List<Integer> getDeliveredCommand(EtatCommande etat, LocalDate startDate, LocalDate endDate);
     void delete(Integer id);
 
+    List<String> getEtats();
 }

@@ -17,11 +17,9 @@ import java.util.Set;
 import java.util.stream.Collectors;
 
 @Entity
-@Getter
-@Setter
+@Data
 @NoArgsConstructor
 @Builder
-@Inheritance(strategy=InheritanceType.TABLE_PER_CLASS)
 @Table(name ="users")
 public class User  implements UserDetails  {
     @Id

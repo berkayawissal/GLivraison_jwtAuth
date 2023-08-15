@@ -2,6 +2,7 @@ package com.example.demo.entity;
 
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.AllArgsConstructor;
 
 import javax.persistence.*;
@@ -18,16 +19,17 @@ public class Produit {
     private Integer idProduit;
     private String nom;
     private double prix;
-    @ManyToOne( cascade=CascadeType.PERSIST)
+    @ManyToOne( fetch = FetchType.LAZY)
     @JoinColumn(name = "pointDeVenteId")
     @JsonBackReference
     private PointDeVente pointDeVente;
-    @ManyToOne( cascade=CascadeType.PERSIST)
+    @ManyToOne( fetch = FetchType.LAZY)
     @JoinColumn(name = "idDistributeur")
     @JsonBackReference
     private Distributeur distributeurs;
 
     @ManyToMany
+    @JsonIgnoreProperties("commandes")
     @JoinTable(
             name = "produitCommande",
             joinColumns = @JoinColumn(name = "produitId"),

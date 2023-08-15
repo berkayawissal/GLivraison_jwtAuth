@@ -5,6 +5,7 @@ import com.example.demo.repository.AdminRepository;
 import com.example.demo.repository.LivreurRepository;
 import com.example.demo.service.LivreurService;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -15,8 +16,8 @@ import java.util.Optional;
 @Slf4j
 @Transactional
 public class LivreurServiceIpml implements LivreurService {
-    private LivreurRepository repository;
-
+    private final LivreurRepository repository;
+    @Autowired
     public LivreurServiceIpml(LivreurRepository repository) {
         this.repository = repository;
     }
@@ -44,5 +45,28 @@ public class LivreurServiceIpml implements LivreurService {
     public Livreur findById(Integer id) {
         Optional<Livreur> optional =repository.findById(id);
         return optional.orElse(null);
+    }
+    @Override
+    public Livreur updateLivreur(Livreur updatedLivreur) {
+        Integer id = updatedLivreur.getId();
+        if (id == null) {
+            log.error("L'ID est null");
+            return null;
+        }
+
+        Optional<Livreur> existingLivreurOptional = repository.findById(id);
+        if (existingLivreurOptional.isEmpty()) {
+            log.error("Livreur avec l'ID {} non trouvé", id);
+            return null;
+        }
+
+        Livreur existingLivreur = existingLivreurOptional.get();
+
+        existingLivreur.setFullname(updatedLivreur.getFullname());
+        existingLivreur.setAddress(updatedLivreur.getAddress());
+        existingLivreur.setLocalisation(updatedLivreur.getLocalisation());
+        existingLivreur.setNumTel(updatedLivreur.getNumTel());
+
+    return repository.save(existingLivreur);
     }
 }

@@ -14,4 +14,5 @@ public interface LivreurService {
     void delete(Integer id);
 
     Livreur findById(Integer id);
+    Livreur updateLivreur(Livreur livreur);
 }

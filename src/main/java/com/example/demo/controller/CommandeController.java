@@ -6,6 +6,8 @@ import com.example.demo.entity.User;
 import com.example.demo.service.CommandeService;
 import javax.validation.Valid;
 
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
@@ -22,10 +24,11 @@ public class CommandeController {
         this.service = service;
     }
     @PostMapping("/save")
-    @PreAuthorize("hasRole('ADMIN')")
-    public Commande saveCommande ( @RequestBody Commande commande){
+   // @PreAuthorize("hasRole('ADMIN')")
+    public ResponseEntity<Commande> saveCommande ( @RequestBody Commande commande){
         System.out.println("saved");
-        return service.saveCommande(commande);
+      // Commande commandeSaved = service.saveCommande(commande);
+        return ResponseEntity.ok(service.saveCommande(commande));
     }
     @GetMapping("/findAll")
     public List<Commande> findAllCommandes(){
@@ -49,6 +52,11 @@ public class CommandeController {
                                                @RequestParam("endDate") LocalDate endDate,
                                                @RequestParam("etat") EtatCommande etat) {
         return service.getDeliveredCommand(etat , startDate, endDate);
+    }
+    @GetMapping("/etats")
+    public ResponseEntity<List<String>> getEtats() {
+        List<String> etats = service.getEtats();
+        return ResponseEntity.ok(etats);
     }
     @DeleteMapping("/delete/{id}")
     @PreAuthorize("hasRole('ADMIN')")

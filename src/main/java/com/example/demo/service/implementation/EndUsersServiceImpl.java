@@ -4,6 +4,7 @@ import com.example.demo.entity.EndUsers;
 import com.example.demo.repository.EndUsersRepository;
 import com.example.demo.service.EndUsersService;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -15,8 +16,8 @@ import java.util.Optional;
 @Transactional
 public class EndUsersServiceImpl implements EndUsersService {
 
-    private EndUsersRepository repository;
-
+    private final EndUsersRepository repository;
+    @Autowired
     public EndUsersServiceImpl(EndUsersRepository repository) {
         this.repository = repository;
     }

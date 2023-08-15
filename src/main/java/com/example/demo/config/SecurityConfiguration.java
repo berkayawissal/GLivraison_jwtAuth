@@ -28,13 +28,13 @@ public class SecurityConfiguration {
     http
         .csrf()
         .disable();
-        http.authorizeRequests().antMatchers(
-      "/**/api/test/admin","/**/role/save",
-                "/**/auth/produit/**","/**/auth/physique/**",
-                "/**/auth/livreur/**","/**/auth/commande/**",
-                "/**/auth/pointDeVente/**","/**/auth/endUser/**",
-                "/**/auth/enLigne/**","/**/auth/distributeur/**"
-                ).hasAuthority("ADMIN");
+//        http.authorizeRequests().antMatchers(
+//      "/**/api/test/admin","/**/role/save",
+//                "/**/auth/produit/**","/**/auth/physique/**",
+//                "/**/auth/livreur/**","/**/auth/commande/**",
+//                "/**/auth/pointDeVente/**","/**/auth/endUser/**",
+//                "/**/auth/enLigne/**","/**/auth/distributeur/**"
+//                ).hasAuthority("ADMIN");
         http.authorizeRequests().antMatchers("/**/register","/**/login",
         		"/**/role/allRoles",
                 "/v3/api-docs",
@@ -49,7 +49,7 @@ public class SecurityConfiguration {
                 "/**/h2-console/**").permitAll()
 
         .anyRequest()
-          .authenticated()
+          .permitAll()
         .and()
           .sessionManagement()
           .sessionCreationPolicy(SessionCreationPolicy.STATELESS)

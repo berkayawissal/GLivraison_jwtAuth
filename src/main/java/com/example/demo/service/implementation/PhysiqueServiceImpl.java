@@ -4,6 +4,7 @@ import com.example.demo.entity.Physique;
 import com.example.demo.repository.PhysiqueRepository;
 import com.example.demo.service.PhysiqueService;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -14,8 +15,8 @@ import java.util.Optional;
 @Slf4j
 @Transactional
 public class PhysiqueServiceImpl implements PhysiqueService {
-    private PhysiqueRepository repository;
-
+    private final PhysiqueRepository repository;
+    @Autowired
     public PhysiqueServiceImpl(PhysiqueRepository repository) {
         this.repository = repository;
     }

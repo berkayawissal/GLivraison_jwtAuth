@@ -4,6 +4,7 @@ import com.example.demo.entity.PointDeVente;
 import com.example.demo.repository.PointDeVenteRepository;
 import com.example.demo.service.PointDeVenteService;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -15,8 +16,8 @@ import java.util.Optional;
 @Transactional
 public class PointDeVenteServiceImpl implements PointDeVenteService {
 
-    private PointDeVenteRepository repository;
-
+    private final PointDeVenteRepository repository;
+    @Autowired
     public PointDeVenteServiceImpl(PointDeVenteRepository repository) {
         this.repository = repository;
     }

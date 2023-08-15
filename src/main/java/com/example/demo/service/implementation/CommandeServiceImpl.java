@@ -1,15 +1,16 @@
 package com.example.demo.service.implementation;
 
-import com.example.demo.entity.Admin;
 import com.example.demo.entity.Commande;
 import com.example.demo.entity.EtatCommande;
 import com.example.demo.repository.CommandeRepository;
 import com.example.demo.service.CommandeService;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDate;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -18,13 +19,10 @@ import java.util.stream.Collectors;
 @Slf4j
 @Transactional
 public class CommandeServiceImpl implements CommandeService {
-    private CommandeRepository repository;
-
+    private final CommandeRepository repository;
+    @Autowired
     public CommandeServiceImpl(CommandeRepository repository) {
-        this.repository=repository;
-    }
-
-    public CommandeServiceImpl() {
+        this.repository = repository;
     }
 
     @Override
@@ -54,10 +52,10 @@ public class CommandeServiceImpl implements CommandeService {
 
     @Override
     public List<Integer> getDeliveredCommand(EtatCommande etat , LocalDate startDate, LocalDate endDate) {
-        Optional<Commande> deliveredCommands = repository.findByEtatDateBetween(startDate, endDate);
+        Optional<Commande>  commands  = repository.findByEtatDateBetween(startDate, endDate);
        // if (deliveredCommands.isPresent()){}
-        return deliveredCommands.stream()
-                .filter(a->a.getEtat()==EtatCommande.LIVREE)
+        return commands.stream()
+                .filter(commande -> etat == null || commande.getEtat() == etat)
                 .map(Commande::getIdCommande)
                 .collect(Collectors.toList());
     }
@@ -69,6 +67,13 @@ public class CommandeServiceImpl implements CommandeService {
             return;
         }
         repository.deleteById(id);
+    }
+
+    @Override
+    public List<String> getEtats() {
+        return Arrays.stream(EtatCommande.values())
+                .map(EtatCommande::name)
+                .collect(Collectors.toList());
     }
 
 

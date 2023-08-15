@@ -8,6 +8,7 @@ import com.example.demo.entity.*;
 import com.example.demo.repository.*;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpHeaders;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -24,12 +25,14 @@ import java.util.Set;
 @Service
 @RequiredArgsConstructor
 @Transactional
+@Slf4j
 public class AuthenticationService {
   private final RoleRepository roleRepository;
   private final UserRepository repository;
   private final DistributeurRepository distributeurRepository;
   private final TokenRepository tokenRepository;
   private final PointDeVenteRepository venteRepository;
+  private final EndUsersRepository endUsersRepository;
   private final PasswordEncoder passwordEncoder;
   private final JwtService jwtService;
   private final AuthenticationManager authenticationManager;
@@ -37,13 +40,13 @@ public class AuthenticationService {
   private final AdminRepository adminRepository;
 
   public AuthenticationResponse register(RegistrationRequest request) {
-	 //
-    Set<String> strRoles = request.getRole();
+    Set<String> strRoles = request.getRoles();
+    log.info("ROLES: " + (request.getRoles()));
       //System.err.println(strRoles[]);
     Set<Role> roles = new HashSet<>();
-    //todo if role = "ADMIN" => adminRepository.save(request) :: dans le table admin
+    //if role = "ADMIN" => adminRepository.save(request) :: dans le table admin
       if (strRoles == null) {
-          Role userRole = roleRepository.findByName("ADMIN")
+          Role userRole = roleRepository.findByName("USER")
                   .orElseThrow(() -> new RuntimeException("Error: Role is not found."));
         roles.add(userRole);
       } else {
@@ -55,6 +58,7 @@ public class AuthenticationService {
 
           });
       }
+      log.info("ROLES: " +(request.getRoles()));
     var  user = User.builder()
             .email(request.getEmail())
             .password(passwordEncoder.encode(request.getPassword()))
@@ -69,29 +73,45 @@ public class AuthenticationService {
       livreur.setFullname(request.getFullname());
      // user = livreur.getIdAdmin();
       livreurRepository.save(livreur);
-    } else if (strRoles.contains("DISTRIBUTEUR"))  {
+    }
+      if (strRoles.contains("DISTRIBUTEUR"))  {
           Distributeur distributeur = new Distributeur();
           distributeur.setEmail(request.getEmail());
           distributeur.setPassword(passwordEncoder.encode(request.getPassword()));
           distributeur.setFullname(request.getFullname());
          // user = distributeur.getIdAdmin();
       distributeurRepository.save(distributeur);
-    }else if (strRoles.contains("POINT_DE_VENTE")){
+    }
+    if (strRoles.contains("END_USER"))  {
+      EndUsers endUsers = new EndUsers();
+      endUsers.setEmail(request.getEmail());
+      endUsers.setPassword(passwordEncoder.encode(request.getPassword()));
+      endUsers.setFullname(request.getFullname());
+      // user = distributeur.getIdAdmin();
+      endUsersRepository.save(endUsers);
+    }
+      if (strRoles.contains("POINT_DE_VENTE")){
       PointDeVente pointDeVente = new PointDeVente();
       pointDeVente.setEmail(request.getEmail());
       pointDeVente.setPassword(passwordEncoder.encode(request.getPassword()));
       pointDeVente.setFullname(request.getFullname());
       //user = pointDeVente.getIdAdmin();
       venteRepository.save(pointDeVente);
-    }else if (strRoles.contains("ADMIN")){
+    }
+      if (strRoles.contains("ADMIN")){
       Admin admin = new Admin();
       admin.setPassword(passwordEncoder.encode(request.getPassword()));
       admin.setEmail(request.getEmail());
       admin.setFullname(request.getFullname());
       adminRepository.save(admin);
-    } else {
-      throw new IllegalArgumentException("Invalid role: " + strRoles);
     }
+     /* else {
+        User userSaved = new User();
+        userSaved.setPassword(passwordEncoder.encode(request.getPassword()));
+        userSaved.setEmail(request.getEmail());
+        userSaved.setFullname(request.getFullname());
+        repository.save(userSaved);
+      }*/
     var savedUser = repository.save(user);
     var jwtToken = jwtService.generateToken(user);
     var refreshToken = jwtService.generateRefreshToken(user);
@@ -103,6 +123,7 @@ public class AuthenticationService {
   }
 
   public AuthenticationResponse authenticate(AuthenticationRequest request) {
+    log.info("userEmail: " + request.getEmail() + request.getPassword());
     authenticationManager.authenticate(
         new UsernamePasswordAuthenticationToken(
             request.getEmail(),
@@ -116,9 +137,9 @@ public class AuthenticationService {
     revokeAllUserTokens(user);
     saveUserToken(user, jwtToken);
     return AuthenticationResponse.builder()
-        .accessToken(jwtToken)
+            .accessToken(jwtToken)
             .refreshToken(refreshToken)
-        .build();
+            .build();
   }
 
   private void saveUserToken(User user, String jwtToken) {
