@@ -4,6 +4,7 @@ import com.example.demo.entity.EnLigne;
 import com.example.demo.repository.EnLigneRepository;
 import com.example.demo.service.EnLigneService;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -15,8 +16,8 @@ import java.util.Optional;
 @Transactional
 public class EnLigneServiceImpl implements EnLigneService {
 
-    private EnLigneRepository repository;
-
+    private final EnLigneRepository repository;
+    @Autowired
     public EnLigneServiceImpl(EnLigneRepository repository) {
         this.repository = repository;
     }

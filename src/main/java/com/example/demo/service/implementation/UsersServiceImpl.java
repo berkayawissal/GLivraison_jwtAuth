@@ -8,6 +8,7 @@ import com.example.demo.repository.TokenRepository;
 import com.example.demo.repository.UserRepository;
 import com.example.demo.service.UsersService;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -18,7 +19,9 @@ import java.util.Optional;
 @Transactional
 public class UsersServiceImpl implements UsersService {
     private final UserRepository repository;
+
     private final TokenRepository tokenRepository;
+    @Autowired
     public UsersServiceImpl(UserRepository repository, TokenRepository tokenRepository) {
         this.repository = repository;
         this.tokenRepository = tokenRepository;

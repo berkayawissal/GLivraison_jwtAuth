@@ -17,7 +17,7 @@ import java.util.Set;
 public class PointDeVente {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    private Integer idPointDeVente;
+    private Integer id;
     private String fullname;
     private String password;
     private String email;

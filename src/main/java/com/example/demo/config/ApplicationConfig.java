@@ -20,13 +20,17 @@ import com.example.demo.repository.UserRepository;
 import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 import org.springframework.web.filter.CorsFilter;
+import org.springframework.web.servlet.config.annotation.CorsRegistry;
+import org.springframework.web.servlet.config.annotation.EnableWebMvc;
+import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
 import java.util.Arrays;
 
 
 @Configuration
 @RequiredArgsConstructor
-public class ApplicationConfig {
+@EnableWebMvc
+public class ApplicationConfig implements WebMvcConfigurer {
 
   private final UserRepository repository;
 @Bean
@@ -75,5 +79,11 @@ public FilterRegistrationBean corsFilter(){
   public PasswordEncoder passwordEncoder() {
     return new BCryptPasswordEncoder();
   }
-
+  @Override
+  public void addCorsMappings(CorsRegistry registry) {
+    registry.addMapping("/**")
+            .allowedOrigins("http://localhost:4200") // Autorisez l'origine du frontend
+            .allowedMethods("GET", "POST", "PUT", "DELETE")
+            .allowCredentials(true);
+  }
 }

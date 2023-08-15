@@ -18,7 +18,7 @@ import com.example.demo.entity.User;
 @Builder
 public class RegistrationRequest {
 
-    private Set<String> role;
+    private Set<String> roles;
     private String email;
     private String password;
     private String fullname;

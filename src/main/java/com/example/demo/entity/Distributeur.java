@@ -23,7 +23,7 @@ import java.util.Set;
 public class Distributeur  {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    private Integer idDistributeur;
+    private Integer id;
     private String fullname;
     private String password;
     private String email;
@@ -48,5 +48,18 @@ public class Distributeur  {
         this.produits = produits;
     }
 
-
+    @Override
+    public String toString() {
+        return "Distributeur{" +
+                "idDistributeur=" + id +
+                ", fullname='" + fullname + '\'' +
+                ", password='" + password + '\'' +
+                ", email='" + email + '\'' +
+                ", address='" + address + '\'' +
+                ", localisation='" + localisation + '\'' +
+                ", numTel='" + numTel + '\'' +
+                ", produits=" + produits +
+                ", user=" + user +
+                '}';
+    }
 }
