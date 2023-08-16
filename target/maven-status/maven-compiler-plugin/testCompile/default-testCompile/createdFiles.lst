@@ -1,0 +1,11 @@
+com\example\demo\service\implementation\DistributeurServiceImplTest.class
+com\example\demo\GestionDeLivraisonApplicationTests.class
+com\example\demo\service\implementation\UsersServiceImplTest.class
+com\example\demo\service\implementation\EndUsersServiceImplTest.class
+com\example\demo\service\implementation\PhysiqueServiceImplTest.class
+com\example\demo\service\implementation\CommandeServiceImplTest.class
+com\example\demo\service\implementation\LivreurServiceIpmlTest.class
+com\example\demo\service\implementation\PointDeVenteServiceImplTest.class
+com\example\demo\service\implementation\EnLigneServiceImplTest.class
+com\example\demo\service\implementation\ProduitServiceImplTest.class
+com\example\demo\service\implementation\AdminServiceImplTest.class
