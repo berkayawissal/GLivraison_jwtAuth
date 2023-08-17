@@ -1,6 +1,5 @@
 package com.example.demo.service;
 
-import com.example.demo.entity.Admin;
 import com.example.demo.entity.Livreur;
 import org.springframework.stereotype.Service;
 
@@ -10,5 +9,9 @@ import java.util.List;
 public interface LivreurService {
     List<Livreur> findAllLivreurs();
 
-    Object saveLivreur(Livreur livreur);
+    Livreur saveLivreur(Livreur livreur);
+    void delete(Integer id);
+
+    Livreur findById(Integer id);
+    Livreur updateLivreur(Livreur livreur);
 }

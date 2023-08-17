@@ -1,7 +1,6 @@
 package com.example.demo.service;
 
 import com.example.demo.entity.User;
-import com.example.demo.exception.AdminNotFoundException;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -17,7 +16,6 @@ public interface UsersService {
     User findById(Integer id);
 
     Optional<User> findByEmail(String email);
-    User getUserByFullname(String name);
 
     void delete(Integer id);
 }

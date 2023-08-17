@@ -10,4 +10,7 @@ public interface EnLigneService {
     List<EnLigne> findAllEnLignes();
 
     EnLigne saveEnLigne(EnLigne enLigne);
+    void delete(Integer id);
+
+    EnLigne findById(Integer id);
 }

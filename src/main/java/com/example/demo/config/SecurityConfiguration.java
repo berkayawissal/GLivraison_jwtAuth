@@ -10,8 +10,8 @@ import org.springframework.security.config.annotation.web.configuration.EnableWe
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.web.SecurityFilterChain;
-import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 import org.springframework.security.web.authentication.logout.LogoutHandler;
+import org.springframework.security.web.authentication.www.BasicAuthenticationFilter;
 
 @Configuration
 @EnableWebSecurity
@@ -27,11 +27,8 @@ public class SecurityConfiguration {
     http
         .csrf()
         .disable();
-       
-        http.authorizeRequests().antMatchers("/**/auth/**",
-        		"/**/role/**",
-        		
-                // swagger
+    http.authorizeRequests().antMatchers("/**/register","/**/login",
+        		"/**/role/allRoles",
                 "/v3/api-docs",
                 "/v3/api-docs/**",
                 "/swagger-resources",
@@ -42,15 +39,15 @@ public class SecurityConfiguration {
                 "/webjars/**",
                 "/swagger-ui.html",
                 "/**/h2-console/**").permitAll()
-         
+
         .anyRequest()
-          .authenticated()
+          .permitAll()
         .and()
           .sessionManagement()
           .sessionCreationPolicy(SessionCreationPolicy.STATELESS)
         .and()
         .authenticationProvider(authenticationProvider)
-        .addFilterBefore(jwtAuthFilter, UsernamePasswordAuthenticationFilter.class)
+        .addFilterBefore(jwtAuthFilter, BasicAuthenticationFilter.class)
         .logout()
         .logoutUrl("/api/v1/auth/logout")
         .addLogoutHandler(logoutHandler)

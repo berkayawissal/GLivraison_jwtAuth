@@ -10,8 +10,9 @@ import com.example.demo.entity.Token;
 
 public interface TokenRepository extends JpaRepository<Token, Integer>{
 
-	
 
+	@Query("select t from Token t  where t.user.id = :id ")
+	List<Token> findAllTokenByUser(Integer id);
 
 	  @Query("select t from Token t inner join User u on t.user.id = u.id where u.id = :id and (t.expired = false or t.revoked = false)")
 	  List<Token> findAllValidTokenByUser(Integer id);

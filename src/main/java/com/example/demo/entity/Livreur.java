@@ -2,24 +2,42 @@ package com.example.demo.entity;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
+import lombok.Data;
+import org.hibernate.annotations.Fetch;
+import org.hibernate.annotations.FetchMode;
 
 import javax.persistence.*;
 import java.util.List;
-import java.util.Set;
 
 @Entity
+@Data
 @Table (name ="livreur")
-public class Livreur extends User{
+public class Livreur {
+    @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    private Integer id;
+    private String fullname;
+    private String password;
+    private String email;
+    private String address;
+    private String localisation;
+    private String numTel;
+
     public Livreur(){
 
     }
-    @OneToMany(mappedBy = "livreurs", cascade = CascadeType.PERSIST)
+    @OneToMany(mappedBy = "livreurs",fetch = FetchType.EAGER)
     @JsonManagedReference
+    @Fetch(value = FetchMode.SUBSELECT)
     private List<Commande> commandes;
     @ManyToOne( cascade=CascadeType.PERSIST)
     @JoinColumn(name = "idEndUser")
     @JsonBackReference
     private EndUsers endUsers;
+    @ManyToOne( fetch = FetchType.LAZY)
+    @JoinColumn(name = "idUser")
+    @JsonBackReference
+    private User user;
     public List<Commande> getCommandes() {
         return commandes;
     }
@@ -36,9 +54,6 @@ public class Livreur extends User{
         this.endUsers = endUsers;
     }
 
-    public Livreur(Integer id, String fullname, String password, String email, String address, String localisation, String numTel, Set<Role> roles) {
-        super(id, fullname, password, email, address, localisation, numTel, roles);
-    }
 
     @Override
     public String toString() {

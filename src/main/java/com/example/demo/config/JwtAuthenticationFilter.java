@@ -1,8 +1,6 @@
 package com.example.demo.config;
 
-import java.beans.Transient;
 import java.io.IOException;
-import java.security.Security;
 
 import javax.servlet.FilterChain;
 import javax.servlet.ServletException;

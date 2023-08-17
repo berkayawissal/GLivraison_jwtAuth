@@ -17,14 +17,14 @@ import com.example.demo.repository.RoleRepository;
 public class RoleController {
   @Autowired
  private  RoleRepository roleRepository;
-  @GetMapping("/getallroles")
-  public List<Role> getallrole(){
+  @GetMapping("/allRoles")
+  public List<Role> getAllRole(){
 	
 	  return roleRepository.findAll() ;
 	  
   }
 
-  @PostMapping("/saveroles")
+  @PostMapping("/save")
   public Role saverole(@RequestBody Role role){
 	
 	  return roleRepository.save(role) ;

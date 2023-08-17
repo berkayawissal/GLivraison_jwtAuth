@@ -18,24 +18,17 @@ import com.example.demo.entity.User;
 @Builder
 public class RegistrationRequest {
 
-    private Set<String> role;
+    private Set<String> roles;
     private String email;
     private String password;
     private String fullname;
-    private String address;
-    private String localisation;
-    private String numTel;
-
 
     // methode de mappage
     public static User toEntity(RegistrationRequest request) {
         return User.builder()
-                .fullname(request.getFullname())
                 .email(request.getEmail())
                 .password(request.getPassword())
-                .address(request.getAddress())
-                .localisation(request.getLocalisation())
-                .numTel(request.getNumTel())
+                .fullname(request.getFullname())
                 .build();
     }
 }

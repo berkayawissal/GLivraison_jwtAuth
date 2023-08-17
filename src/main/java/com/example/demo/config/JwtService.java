@@ -10,21 +10,19 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.function.Function;
 
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
+//testing push for : jenkins
 
 
 @Service
 public class JwtService {
+//testing push for : jenkins
 
-  //@Value("${application.security.jwt.secret-key}")
   private String secretKey= "404E635266556A586E3272357538782F413F4428472B4B6250645367566B5970";
-  //@Value("${application.security.jwt.expiration}")
-  private long jwtExpiration=60000;
-  //@Value("${application.security.jwt.refresh-token.expiration}")
-  private long refreshExpiration=604800000;
 
+  private long jwtExpiration=86400000;
+  private long refreshExpiration=668882;
   public String extractUsername(String token) {
     return extractClaim(token, Claims::getSubject);
   }
@@ -35,6 +33,8 @@ public class JwtService {
   }
 
   public String generateToken(UserDetails userDetails) {
+    Map<String, Object> claims = new HashMap<>();
+    claims.put("fullname", userDetails.getUsername());
     return generateToken(new HashMap<>(), userDetails);
   }
 
@@ -61,7 +61,7 @@ public class JwtService {
             .setClaims(extraClaims)
             .setSubject(userDetails.getUsername())
             .setIssuedAt(new Date(System.currentTimeMillis()))
-            .setExpiration(new Date(System.currentTimeMillis() + expiration))
+            .setExpiration(new Date(System.currentTimeMillis()  + 1000 * 60 * 60 * 24))
             .signWith(getSignInKey(), SignatureAlgorithm.HS256)
             .compact();
   }

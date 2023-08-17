@@ -12,8 +12,9 @@ public interface AdminService {
     Admin saveAdmin(Admin dto);
 
     Admin findById(Integer idAdmin);
+    void delete(Integer id);
 
-    //Object updateAdminbyId(Integer id, Admin admin);
+//    Admin updateAdminbyId(Integer id, Admin admin);
 
 }
 
