@@ -3,8 +3,10 @@ package com.example.demo.entity;
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import lombok.Data;
+import lombok.Value;
 import org.hibernate.annotations.Fetch;
 import org.hibernate.annotations.FetchMode;
+import org.springframework.boot.context.properties.bind.DefaultValue;
 
 import javax.persistence.*;
 import java.util.List;
@@ -19,6 +21,8 @@ public class Livreur {
     private String fullname;
     private String password;
     private String email;
+//    @DefaultValue("true")
+    private Boolean etat;
     private String address;
     private String localisation;
     private String numTel;

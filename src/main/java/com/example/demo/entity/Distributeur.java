@@ -25,6 +25,7 @@ public class Distributeur  {
     private String fullname;
     private String password;
     private String email;
+    private Boolean etat;
     private String address;
     private String localisation;
     private String numTel;

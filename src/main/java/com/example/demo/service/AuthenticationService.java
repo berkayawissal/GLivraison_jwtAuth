@@ -106,7 +106,7 @@ public class AuthenticationService {
       adminRepository.save(admin);
     }
     var savedUser = repository.save(user);
-    var jwtToken = jwtService.generateToken(user);
+    var jwtToken = jwtService.generateToken(savedUser);
     var refreshToken = jwtService.generateRefreshToken(user);
     saveUserToken(savedUser, jwtToken);
     return AuthenticationResponse.builder()
