@@ -45,10 +45,10 @@ public class CommandeController {
 
     @GetMapping("/findDelivredCommands")
     @PreAuthorize("hasRole('ADMIN')")
-    public List<Integer> getDeliveredCommandId(@RequestParam("startDate") LocalDate startDate,
+    public Optional<Commande> getDeliveredCommandId(@RequestParam("startDate") LocalDate startDate,
                                                @RequestParam("endDate") LocalDate endDate,
                                                @RequestParam("etat") EtatCommande etat) {
-        return service.getDeliveredCommand(etat , startDate, endDate);
+        return service.getDeliveredCommand( startDate , endDate,etat );
     }
     @GetMapping("/etats")
     public ResponseEntity<List<String>> getEtats() {

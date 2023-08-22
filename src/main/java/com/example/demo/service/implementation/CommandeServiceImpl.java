@@ -42,7 +42,7 @@ public class CommandeServiceImpl implements CommandeService {
     }
     @Override
     public Optional<Commande> findCommandeByEtat(EtatCommande etat) {
-        Optional<Commande> commandes = repository.findByEtat(EtatCommande.LIVREE);
+        Optional<Commande> commandes = repository.findByEtat(etat);
         if (commandes.isPresent()){
             return Optional.ofNullable(commandes.orElseThrow(() -> new RuntimeException("no delivered command found")));
     } else {
@@ -51,13 +51,18 @@ public class CommandeServiceImpl implements CommandeService {
     }
 
     @Override
-    public List<Integer> getDeliveredCommand(EtatCommande etat , LocalDate startDate, LocalDate endDate) {
-        Optional<Commande>  commands  = repository.findByEtatDateBetween(startDate, endDate);
+    public Optional<Commande> getDeliveredCommand(LocalDate startDate, LocalDate endDate, EtatCommande etat  ) {
+        Optional<Commande>  commandes  = repository.findByEtatDateBetweenAndEtat(startDate, endDate, etat);
        // if (deliveredCommands.isPresent()){}
-        return commands.stream()
-                .filter(commande -> etat == null || commande.getEtat() == etat)
-                .map(Commande::getIdCommande)
-                .collect(Collectors.toList());
+//        return commands.stream()
+//               // .filter(commande -> etat == null || commande.getEtat() == etat)
+//                .map(Commande::getIdCommande)
+//                .collect(Collectors.toList());
+        if (commandes.isPresent()){
+            return Optional.ofNullable(commandes.orElseThrow(() -> new RuntimeException("no delivered command found")));
+        } else {
+            return Optional.empty();
+        }
     }
 
     @Override
