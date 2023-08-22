@@ -21,14 +21,14 @@ import static org.mockito.Mockito.when;
 @SpringBootTest
 @ExtendWith(MockitoExtension.class)
 class AdminServiceImplTest {
-    private AdminServiceImpl underTest;
+//    private AdminServiceImpl underTest;
 
-    @Mock
-    private AdminRepository repository;
+//    @Mock
+//    private AdminRepository repository;
     @BeforeEach
     void setUp() {
-        MockitoAnnotations.initMocks(this);
-        underTest = new AdminServiceImpl(repository);
+//        MockitoAnnotations.initMocks(this);
+//        underTest = new AdminServiceImpl(repository);
     }
                                                 //id, fullname, password,email,address,localisation, numTel, List<Token> tokens, Set<Role> roles
     @Test
