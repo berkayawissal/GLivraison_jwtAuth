@@ -1,7 +1,6 @@
 package com.example.demo.entity;
 
 
-import com.example.demo.entity.User;
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import lombok.AllArgsConstructor;
