@@ -2,11 +2,8 @@ package com.example.demo.controller;
 
 import com.example.demo.entity.Commande;
 import com.example.demo.entity.EtatCommande;
-import com.example.demo.entity.User;
 import com.example.demo.service.CommandeService;
-import javax.validation.Valid;
 
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
@@ -48,10 +45,10 @@ public class CommandeController {
 
     @GetMapping("/findDelivredCommands")
     @PreAuthorize("hasRole('ADMIN')")
-    public List<Integer> getDeliveredCommandId(@RequestParam("startDate") LocalDate startDate,
+    public Optional<Commande> getDeliveredCommandId(@RequestParam("startDate") LocalDate startDate,
                                                @RequestParam("endDate") LocalDate endDate,
                                                @RequestParam("etat") EtatCommande etat) {
-        return service.getDeliveredCommand(etat , startDate, endDate);
+        return service.getDeliveredCommand( startDate , endDate,etat );
     }
     @GetMapping("/etats")
     public ResponseEntity<List<String>> getEtats() {

@@ -1,7 +1,6 @@
 package com.example.demo.controller;
 
 import com.example.demo.entity.EndUsers;
-import com.example.demo.entity.User;
 import com.example.demo.service.EndUsersService;
 import javax.validation.Valid;
 

@@ -105,15 +105,8 @@ public class AuthenticationService {
       admin.setFullname(request.getFullname());
       adminRepository.save(admin);
     }
-     /* else {
-        User userSaved = new User();
-        userSaved.setPassword(passwordEncoder.encode(request.getPassword()));
-        userSaved.setEmail(request.getEmail());
-        userSaved.setFullname(request.getFullname());
-        repository.save(userSaved);
-      }*/
     var savedUser = repository.save(user);
-    var jwtToken = jwtService.generateToken(user);
+    var jwtToken = jwtService.generateToken(savedUser);
     var refreshToken = jwtService.generateRefreshToken(user);
     saveUserToken(savedUser, jwtToken);
     return AuthenticationResponse.builder()
@@ -135,7 +128,7 @@ public class AuthenticationService {
     var jwtToken = jwtService.generateToken(user);
     var refreshToken = jwtService.generateRefreshToken(user);
     revokeAllUserTokens(user);
-    saveUserToken(user, jwtToken);
+   // saveUserToken(user, jwtToken);
     return AuthenticationResponse.builder()
             .accessToken(jwtToken)
             .refreshToken(refreshToken)

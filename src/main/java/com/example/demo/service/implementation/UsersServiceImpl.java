@@ -3,7 +3,6 @@ package com.example.demo.service.implementation;
 import
         com.example.demo.entity.Token;
 import com.example.demo.entity.User;
-import com.example.demo.exception.AdminNotFoundException;
 import com.example.demo.repository.TokenRepository;
 import com.example.demo.repository.UserRepository;
 import com.example.demo.service.UsersService;

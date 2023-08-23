@@ -1,7 +1,6 @@
 package com.example.demo.entity;
 
 import javax.persistence.*;
-import java.util.Set;
 
 @Entity
 public class EnLigne extends PointDeVente{
