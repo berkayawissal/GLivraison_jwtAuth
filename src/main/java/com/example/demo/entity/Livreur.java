@@ -3,11 +3,8 @@ package com.example.demo.entity;
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import lombok.Data;
-import lombok.Value;
 import org.hibernate.annotations.Fetch;
 import org.hibernate.annotations.FetchMode;
-import org.springframework.boot.context.properties.bind.DefaultValue;
-
 import javax.persistence.*;
 import java.util.List;
 
@@ -27,9 +24,7 @@ public class Livreur {
     private String localisation;
     private String numTel;
 
-    public Livreur(){
 
-    }
     @OneToMany(mappedBy = "livreurs",fetch = FetchType.EAGER)
     @JsonManagedReference
     @Fetch(value = FetchMode.SUBSELECT)
