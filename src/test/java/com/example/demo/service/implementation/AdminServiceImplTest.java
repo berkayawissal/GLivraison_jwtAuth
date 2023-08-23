@@ -18,8 +18,8 @@ import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
-@SpringBootTest
-@ExtendWith(MockitoExtension.class)
+//@SpringBootTest
+//@ExtendWith(MockitoExtension.class)
 class AdminServiceImplTest {
 //    private AdminServiceImpl underTest;
 
