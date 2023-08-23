@@ -1,7 +1,6 @@
 package com.example.demo.controller;
 
 import com.example.demo.entity.PointDeVente;
-import com.example.demo.entity.User;
 import com.example.demo.service.PointDeVenteService;
 import javax.validation.Valid;
 

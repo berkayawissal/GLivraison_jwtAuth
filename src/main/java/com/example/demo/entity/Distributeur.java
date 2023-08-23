@@ -11,9 +11,7 @@ import org.hibernate.annotations.Fetch;
 import org.hibernate.annotations.FetchMode;
 
 import javax.persistence.*;
-import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
 
 @Entity
 @NoArgsConstructor
@@ -27,6 +25,7 @@ public class Distributeur  {
     private String fullname;
     private String password;
     private String email;
+    private Boolean etat;
     private String address;
     private String localisation;
     private String numTel;

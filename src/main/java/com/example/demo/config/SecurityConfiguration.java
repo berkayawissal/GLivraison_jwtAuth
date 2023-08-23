@@ -10,7 +10,6 @@ import org.springframework.security.config.annotation.web.configuration.EnableWe
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.web.SecurityFilterChain;
-import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 import org.springframework.security.web.authentication.logout.LogoutHandler;
 import org.springframework.security.web.authentication.www.BasicAuthenticationFilter;
 
@@ -28,14 +27,13 @@ public class SecurityConfiguration {
     http
         .csrf()
         .disable();
-//        http.authorizeRequests().antMatchers(
-//      "/**/api/test/admin","/**/role/save",
+//    http.authorizeRequests().antMatchers( "/**/api/test/admin","/**/role/save",
 //                "/**/auth/produit/**","/**/auth/physique/**",
 //                "/**/auth/livreur/**","/**/auth/commande/**",
 //                "/**/auth/pointDeVente/**","/**/auth/endUser/**",
 //                "/**/auth/enLigne/**","/**/auth/distributeur/**"
 //                ).hasAuthority("ADMIN");
-        http.authorizeRequests().antMatchers("/**/register","/**/login",
+    http.authorizeRequests().antMatchers("/**/register","/**/login",
         		"/**/role/allRoles",
                 "/v3/api-docs",
                 "/v3/api-docs/**",
@@ -49,7 +47,8 @@ public class SecurityConfiguration {
                 "/**/h2-console/**").permitAll()
 
         .anyRequest()
-          .permitAll()
+            .permitAll()
+         // .authenticated()
         .and()
           .sessionManagement()
           .sessionCreationPolicy(SessionCreationPolicy.STATELESS)

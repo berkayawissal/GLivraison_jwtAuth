@@ -1,6 +1,5 @@
 package com.example.demo.service;
 
-import com.example.demo.entity.Admin;
 import com.example.demo.entity.Livreur;
 import org.springframework.stereotype.Service;
 

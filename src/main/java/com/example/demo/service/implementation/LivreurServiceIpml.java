@@ -1,7 +1,6 @@
 package com.example.demo.service.implementation;
 
 import com.example.demo.entity.Livreur;
-import com.example.demo.repository.AdminRepository;
 import com.example.demo.repository.LivreurRepository;
 import com.example.demo.service.LivreurService;
 import lombok.extern.slf4j.Slf4j;

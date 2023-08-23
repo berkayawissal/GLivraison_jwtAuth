@@ -10,7 +10,6 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.function.Function;
 
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
 //testing push for : jenkins
@@ -60,6 +59,7 @@ public class JwtService {
     return Jwts
             .builder()
             .setClaims(extraClaims)
+         //   .claim("authorities", userDetails.getAuthorities())
             .setSubject(userDetails.getUsername())
             .setIssuedAt(new Date(System.currentTimeMillis()))
             .setExpiration(new Date(System.currentTimeMillis()  + 1000 * 60 * 60 * 24))

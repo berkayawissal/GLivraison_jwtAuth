@@ -8,7 +8,6 @@ import org.hibernate.annotations.FetchMode;
 
 import javax.persistence.*;
 import java.util.List;
-import java.util.Set;
 
 @Inheritance(strategy=InheritanceType.TABLE_PER_CLASS)
 @Entity

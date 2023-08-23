@@ -1,11 +1,7 @@
 package com.example.demo.controller;
 
 
-import com.example.demo.auth.AuthenticationRequest;
-import com.example.demo.auth.AuthenticationResponse;
-import com.example.demo.auth.RegistrationRequest;
 import com.example.demo.entity.User;
-import com.example.demo.service.AuthenticationService;
 import com.example.demo.service.UsersService;
 
 import lombok.RequiredArgsConstructor;
@@ -14,7 +10,6 @@ import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
 
